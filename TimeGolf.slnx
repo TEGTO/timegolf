@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="server/TimeGolf/TimeGolf.csproj" />
+  <Project Path="server/TimeGolf.Tests/TimeGolf.Tests.csproj" />
+</Solution>

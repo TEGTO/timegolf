@@ -1,0 +1,140 @@
+/* ---------- ready room ---------- */
+
+.lobby-room {
+  background: linear-gradient(180deg, rgba(95, 184, 240, 0.7), rgba(232, 247, 255, 0.55));
+  backdrop-filter: blur(3px);
+}
+
+.room {
+  display: grid;
+  gap: 16px;
+  width: min(380px, calc(100% - 32px));
+  padding: 24px;
+}
+
+.room header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.room h2 {
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.room header .dim {
+  flex: none;
+  font-size: 13px;
+}
+
+.room ul,
+.room ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.room-players li,
+.last-match li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 2px;
+  border-top: 1px solid var(--border);
+}
+
+.room .name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.room .me .name {
+  font-weight: 900;
+}
+
+.tick {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--panel-line);
+  color: transparent;
+  transition: background 0.15s;
+}
+
+.tick.on {
+  background: var(--accent);
+  color: #fff;
+}
+
+.last-match h3 {
+  margin: 0 0 4px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.last-match li {
+  padding: 4px 2px;
+  font-size: 13px;
+}
+
+.last-match .place {
+  width: 12px;
+  color: var(--ink-muted);
+}
+
+.last-match .pts {
+  font-weight: 900;
+}
+
+.last-match .winner .name::after {
+  content: ' ★';
+  color: #e0a800;
+}
+
+.ready {
+  padding: 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow:
+    0 5px 0 #13804a,
+    var(--shadow);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 26px;
+  letter-spacing: 0.02em;
+  transition:
+    translate 0.08s,
+    box-shadow 0.08s,
+    background 0.15s;
+}
+
+.ready:hover {
+  background: var(--accent-hover);
+}
+
+.ready.on {
+  translate: 0 4px;
+  background: #fff;
+  box-shadow:
+    0 1px 0 #13804a,
+    inset 0 0 0 3px var(--accent);
+  color: var(--accent);
+}
+
+.room .quit {
+  justify-self: center;
+}

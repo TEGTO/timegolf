@@ -1,0 +1,14 @@
+**/bin
+**/obj
+**/.vs
+**/.idea
+**/.vscode
+**/.git
+**/*.user
+**/.env
+**/node_modules
+**/dist
+**/TestResults
+docs
+client
+server/TimeGolf.Tests

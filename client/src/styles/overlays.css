@@ -1,0 +1,90 @@
+/* ---------- results ---------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(95, 184, 240, 0.28);
+}
+
+.results {
+  width: min(540px, calc(100% - 32px));
+  padding: 24px 28px;
+}
+
+.results h2 {
+  margin: 0 0 16px;
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.results table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results th {
+  padding: 0 8px 6px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.results td {
+  padding: 7px 8px;
+  border-top: 1px solid var(--border);
+}
+
+.results td .dot {
+  margin-right: 8px;
+}
+
+.results .num {
+  text-align: right;
+}
+
+.results .pts {
+  font-weight: 900;
+}
+
+.results .place {
+  width: 24px;
+  color: var(--ink-muted);
+}
+
+.results tr.me td {
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.results tr.winner td {
+  background: #fff6d6;
+}
+
+.countdown {
+  margin: 16px 0 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.countdown b {
+  color: var(--ink);
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 80px;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  background: var(--danger);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}

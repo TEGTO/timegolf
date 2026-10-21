@@ -1,0 +1,29 @@
+{
+  "name": "timegolf",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@microsoft/signalr": "^10.0.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "three": "^0.186.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^1.7.1",
+    "@rsbuild/plugin-react": "^1.4.2",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.186.0",
+    "prettier": "^3.7.3",
+    "typescript": "^5.9.3"
+  }
+}

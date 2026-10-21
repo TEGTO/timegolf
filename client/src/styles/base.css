@@ -1,0 +1,71 @@
+:root {
+  --font: Nunito, 'Segoe UI', system-ui, sans-serif;
+  --display: 'Lilita One', 'Arial Rounded MT Bold', var(--font);
+  --radius: 10px;
+  --panel: rgba(255, 255, 255, 0.84);
+  --panel-line: rgba(31, 42, 55, 0.08);
+  --ink: #1f2a37;
+  --ink-muted: #6b7686;
+  --border: #e6e9ee;
+  --accent: #19a35b;
+  --accent-hover: #22b868;
+  --flag: #e8352b;
+  --flag-dark: #b8241c;
+  --branch: #1592d6;
+  --warn: #ffc23d;
+  --danger: #e8352b;
+  --sky-top: #5fb8f0;
+  --sky-bottom: #e8f7ff;
+  --shadow: 0 6px 20px rgba(23, 63, 99, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--sky-bottom);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dim {
+  color: var(--ink-muted);
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.sky {
+  height: 100%;
+  background: linear-gradient(180deg, var(--sky-top) 0%, #a9dcf8 45%, var(--sky-bottom) 100%);
+}
+
+/* ---------- cards (results) ---------- */
+
+.card {
+  width: min(400px, calc(100% - 32px));
+  padding: 32px;
+  background: #fff;
+  color: var(--ink);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}

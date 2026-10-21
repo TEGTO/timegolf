@@ -1,0 +1,31 @@
+name: timegolf
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: server/TimeGolf/Dockerfile
+    image: timegolf-backend:latest
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  frontend:
+    build:
+      context: client
+      dockerfile: Dockerfile
+    image: timegolf-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy

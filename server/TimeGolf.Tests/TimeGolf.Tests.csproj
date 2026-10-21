@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../TimeGolf/TimeGolf.csproj" />
+  </ItemGroup>
+</Project>
