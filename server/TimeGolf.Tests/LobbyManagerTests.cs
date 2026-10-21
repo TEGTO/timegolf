@@ -132,6 +132,28 @@ public sealed class LobbyManagerTests
     }
 
     [Test]
+    public void LastPlayerLeaving_DeletesLobbyAtOnce()
+    {
+        // Arrange
+        var lobbies = NewManager();
+        var id = lobbies.Create("Fun", null, 4, Start);
+        lobbies.Join("a", id, null, "Alice", "key-a", Start);
+        lobbies.Join("b", id, null, "Bob", "key-b", Start);
+        lobbies.Leave("a", Start);
+        var afterFirst = lobbies.List("m").Length;
+
+        // Act
+        lobbies.Leave("b", Start);
+
+        // Assert
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(afterFirst, Is.EqualTo(1));
+            Assert.That(lobbies.List("m"), Is.Empty);
+        }
+    }
+
+    [Test]
     public void OccupiedLobby_IsKept()
     {
         // Arrange

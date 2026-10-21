@@ -64,7 +64,7 @@ Turn-based multiplayer browser mini-golf with a **rewritable shared past**. Ever
 | `RoundResults` | `roundResultsSeconds` (5) | next round, or `MatchResults` after round 3 |
 | `MatchResults` | `matchResultsSeconds` (15) | `Lobby` (ready flags cleared; last match results kept for display) |
 
-No active players while a game runs (everyone disconnected) → game kept frozen; reconnect within `emptyLobbySeconds` resumes it, otherwise the lobby is deleted. Explicit **Leave** by the last active player → `Lobby`. Returning to `Lobby` purges inactive players and clears points, votes, ready and spectator flags.
+No active players while a game runs (everyone disconnected) → game kept frozen; reconnect within `emptyLobbySeconds` resumes it, otherwise the lobby is deleted. Explicit **Leave** (Quit) by the last active player deletes the lobby. Returning to `Lobby` purges inactive players and clears points, votes, ready and spectator flags.
 
 **Restart vote**: any active player may toggle a restart vote (any phase except `Lobby`). When votes > half of active players (spectators included) → game ends immediately → `Lobby` (votes and ready flags cleared). Disconnect clears that player's vote.
 
@@ -79,7 +79,7 @@ No active players while a game runs (everyone disconnected) → game kept frozen
 - **Join**: from the lobby list. Rejected if wrong password (`Wrong password`) or active players ≥ maxPlayers (`Lobby is full`; a reconnecting existing player is always allowed). Joining while a game runs follows §3.6 (enter current round before its first hit, otherwise spectate and play from next round with 0 points).
 - **Ready room** (`Lobby` phase): players toggle Ready (can unpress). Game starts the moment all active players are ready. Disconnecting in the ready room removes the player from the lobby.
 - **Leave** (in-game Quit or ready-room Quit): player removed from the lobby (as a disconnect during a game → inactive, purged at match end).
-- Lobby with no active players is deleted after `emptyLobbySeconds` (60) — grace for page reloads.
+- Lobby with no active players is deleted after `emptyLobbySeconds` (60) — grace for page reloads; deleted at once when the last player Quits (Leave).
 - Lobby list shows: name, lock icon if password, `players/maxPlayers` (active), phase (`waiting` / `in game`). Pushed live to clients on the main menu.
 
 ## 4. Physics (server only)
@@ -371,7 +371,7 @@ client/  (package.json, rsbuild.config.ts, tsconfig.json, Dockerfile, nginx.conf
 - Scoring: holed = ceil(100/hits); not holed = ceil(100/(hits + path distance)); ranking by score desc; missed round = worst − 2 (≥ 0) incl. inactive and late joiners; no winner with 0 points.
 - Restart vote: minority no-op; majority → new match, points & votes reset; second press withdraws.
 - Players: join before first hit enters current round; join after first hit spectates until next round; reconnect restores; dedupe names among active; all leave → `Lobby`.
-- Lobbies: create/join/password/full; ready start only when all active ready; unready blocks; match end → `Lobby` with ready cleared; restart vote → `Lobby`; ready-room disconnect removes player; empty lobby deleted after 60 s; two lobbies fully independent; `Lobbies` pushed to menu connections only.
+- Lobbies: create/join/password/full; ready start only when all active ready; unready blocks; match end → `Lobby` with ready cleared; restart vote → `Lobby`; ready-room disconnect removes player; empty lobby deleted after 60 s, at once after the last Leave; two lobbies fully independent; `Lobbies` pushed to menu connections only.
 - Aim relay: only current-turn player's `Aim` relayed, to others only; ignored during playback / other phases; rate limit.
 - Physics: no tunneling, rests on flat, slope keeps moving, sand stops sooner, hole capture/skim, bounces recorded.
 - Generator: deterministic; 1000 seeds × rounds beatable; spawns ≥16; hole clearance; distance field finite at spawns, ~0 at hole, ≥ straight-line distance.

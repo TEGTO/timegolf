@@ -16,42 +16,42 @@ Join or create a lobby, press Ready. 3 rounds, 10 turns each, 60 s per turn.
 
 On your turn: **hit**, **re-do one of your past hits** (pick it on the timeline), or skip. A re-do replays everything after it with the original shots — yours and everyone else's.
 
-| | Round score |
-|---|---|
-| Holed | `ceil(100 / hits)` |
+|           | Round score                                     |
+| --------- | ----------------------------------------------- |
+| Holed     | `ceil(100 / hits)`                              |
 | Not holed | `ceil(100 / (hits + walking distance to hole))` |
 
 Most points after 3 rounds wins. Holed players sit out until a re-do knocks them back out.
 
 ## Controls
 
-| Input | Action |
-|---|---|
-| LMB drag from own ball | aim and shoot (or re-do the viewed hit) |
-| Esc / RMB while aiming | cancel the aim |
-| Click a timeline marker, ← / → | view a past moment |
-| Esc / `Now` | back to the present |
-| S | skip turn |
-| Wheel | zoom |
-| RMB drag | pan |
-| F | refocus on the ball |
-| Q / E, MMB drag | rotate camera (eased quarter turns / free) |
-| M | mute |
+| Input                          | Action                                     |
+| ------------------------------ | ------------------------------------------ |
+| LMB drag from own ball         | aim and shoot (or re-do the viewed hit)    |
+| Esc / RMB while aiming         | cancel the aim                             |
+| Click a timeline marker, ← / → | view a past moment                         |
+| Esc / `Now`                    | back to the present                        |
+| S                              | skip turn                                  |
+| Wheel                          | zoom                                       |
+| RMB drag                       | pan                                        |
+| F                              | refocus on the ball                        |
+| Q / E, MMB drag                | rotate camera (eased quarter turns / free) |
+| M                              | mute                                       |
 
 ## Screenshots
 
-| | |
-|---|---|
-| ![Main menu with the live lobby list](docs/media/menu.png) | ![Ready room](docs/media/ready-room.png) |
-| Main menu with the live lobby list | Ready room |
-| ![Whole round-3 course from above: windmill, pillar plaza, two bunkers, hole](docs/media/overview.png) | ![Bob aims at the windmill with the other three players around him](docs/media/aiming.png) |
-| Overview (Meadow): windmill, pillars, bunkers, hole | Aiming at the windmill, four players at the tee (Beach) |
+|                                                                                                                                       |                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Main menu with the live lobby list](docs/media/menu.png)                                                                            | ![Ready room](docs/media/ready-room.png)                                                                                              |
+| Main menu with the live lobby list                                                                                                    | Ready room                                                                                                                            |
+| ![Whole round-3 course from above: windmill, pillar plaza, two bunkers, hole](docs/media/overview.png)                                | ![Bob aims at the windmill with the other three players around him](docs/media/aiming.png)                                            |
+| Overview (Meadow): windmill, pillars, bunkers, hole                                                                                   | Aiming at the windmill, four players at the tee (Beach)                                                                               |
 | ![Viewing hit #2: Alice's future path through the bunker room and the windmill with #3, #7, #11 badges](docs/media/past-hit-path.png) | ![After Carol re-did hit #1: her new path, the old one as a grey ghost and Dave's knocked path dashed](docs/media/changed-future.png) |
-| Viewing a past hit: future path with `#n` badges (Candy) | Changed future after Carol's re-do: ghost path and `#1 · Carol` badge (Snow) |
-| ![Ball rolling out of the windmill tunnel as a sail swings down](docs/media/windmill.png) | ![Ball rolling down a ramp to the lower tier past a pillar chicane](docs/media/ramp.png) |
-| Windmill close-up: the gap closes whenever a sail points down (Autumn) | Ramp down to a lower tier (Meadow) |
-| ![Dave's ball heading into a row of bumpers](docs/media/bumpers.png) | ![Round results for four players](docs/media/round-results.png) |
-| Mid-shot into the bumpers (Beach) | Round results |
+| Viewing a past hit: future path with `#n` badges (Candy)                                                                              | Changed future after Carol's re-do: ghost path and `#1 · Carol` badge (Snow)                                                          |
+| ![Ball rolling out of the windmill tunnel as a sail swings down](docs/media/windmill.png)                                             | ![Ball rolling down a ramp to the lower tier past a pillar chicane](docs/media/ramp.png)                                              |
+| Windmill close-up: the gap closes whenever a sail points down (Autumn)                                                                | Ramp down to a lower tier (Meadow)                                                                                                    |
+| ![Dave's ball heading into a row of bumpers](docs/media/bumpers.png)                                                                  | ![Round results for four players](docs/media/round-results.png)                                                                       |
+| Mid-shot into the bumpers (Beach)                                                                                                     | Round results                                                                                                                         |
 
 **A shot through the windmill, bouncing off the plaza wall**
 
@@ -66,7 +66,6 @@ Most points after 3 rounds wins. Holed players sit out until a re-do knocks them
 - **Server**: .NET 10, ASP.NET Core SignalR, everything in memory with no database. The server owns the physics, which is deterministic: fixed 1/120 s steps, a seeded level and the same hit records always give the same result. That makes rewinding exact. Each hit is simulated instantly, and clients receive 20 Hz tracks and bounce events to play back. Lobbies run independently and are stepped in parallel.
 - **Client**: React 19 + TypeScript, zustand, plain three.js, bundled with Rsbuild. A 2.5D look from an orthographic camera, a sun light with fitted shadows, and canvas-painted textures. The client uses no model or texture files: terrain tiers, ramps, walls, bumpers, windmills and the hole are all built in code.
 - **Level generator**: a seeded random walk over a 7×5 grid of 6×6-cell modules. Each module gets one hand-tuned piece (open, corridor, chicane, plaza, bridge, bunker, ramp, bumpers, windmill), and difficulty rises each round. Every level is checked for beatability with a BFS that tests whether a ball fits through. If a level fails, obstacles are removed until it passes or it is regenerated. A Dijkstra distance field measures the walking distance used in scoring.
-- Wire contract: `server/TimeGolf/Dtos.cs` ↔ `client/src/types.ts` (camelCase JSON).
 
 ## Run locally
 
@@ -87,8 +86,6 @@ dotnet test TimeGolf.slnx
 ```
 
 Open a second browser profile or an incognito window to play against yourself.
-
-**Sounds (optional)**: put `hit.mp3`, `hole.mp3`, `switch.mp3` and `wall.mp3` in `client/public/sfx/`. If they are missing, synthesized Web Audio sounds play instead.
 
 ## Deployment
 

@@ -86,6 +86,11 @@ public sealed class LobbyManager(GameOptions options, Func<LobbySettings, Match>
             if (connections.Remove(connectionId, out var lobby))
             {
                 lobby.Match.Leave(connectionId, now);
+                // The reload grace only matters for disconnects; nobody comes back after Quit.
+                if (lobby.Match.Info().Players == 0)
+                {
+                    Delete(lobby);
+                }
             }
 
             menu.Add(connectionId);
@@ -210,14 +215,19 @@ public sealed class LobbyManager(GameOptions options, Func<LobbySettings, Match>
                 continue;
             }
 
-            lobbies.Remove(lobby);
-            foreach (var connectionId in connections.Where(c => c.Value == lobby).Select(c => c.Key).ToList())
-            {
-                connections.Remove(connectionId);
-            }
-
-            logger.LobbyDeleted(lobby.Match.Settings.Id);
+            Delete(lobby);
         }
+    }
+
+    private void Delete(Lobby lobby)
+    {
+        lobbies.Remove(lobby);
+        foreach (var connectionId in connections.Where(c => c.Value == lobby).Select(c => c.Key).ToList())
+        {
+            connections.Remove(connectionId);
+        }
+
+        logger.LobbyDeleted(lobby.Match.Settings.Id);
     }
 
     private LobbyInfoDto[] Infos() => [.. lobbies.Select(l => l.Match.Info())];
